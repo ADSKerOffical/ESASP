@@ -1,0 +1,243 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/ionlyusegithubformcmods/1-Line-Scripts/main/Mobile%20Friendly%20Orion')))()
+
+local Window = OrionLib:MakeWindow({Name = "Budgie Hub | Every second add +1 skill point", HidePremium = true, IntroEnabled = false, SaveConfig = false, ConfigFolder = "OrionTest"})
+
+local Tab = Window:MakeTab({
+ Name = "Main",
+ Icon = "rbxassetid://4483345998",
+ PremiumOnly = false
+})
+game:GetService("GuiService"):SetGameplayPausedNotificationEnabled(false)
+
+local Section = Tab:AddSection({
+  Name = "Sword and punch"
+})
+
+Tab:AddToggle({
+ Name = "Hit all dummies by sword or punch",
+ Default = false,
+ Callback = function(Value)
+     ooj = Value
+while ooj and game:GetService("RunService").RenderStepped:Wait() do
+    local LP = game:GetService("Players").LocalPlayer
+local tool = LP.Character and LP.Character:FindFirstChildOfClass("Tool")
+            if tool and tool:FindFirstChild("Handle") then
+                tool:Activate()
+                for i, v in next, workspace:GetDescendants() do
+                    if v:IsA("Humanoid") and not game:GetService("Players"):GetPlayerFromCharacter(v.Parent) then
+                       for i, d in next, v.Parent:GetDescendants() do
+                         if d:IsA("BasePart") then coroutine.wrap(function()
+                           firetouchinterest(tool.Handle, d, 0)
+                           firetouchinterest(tool.Handle, d, 1)
+                        end)() end
+                    end
+                 end
+             end
+         end
+     end
+   end    
+})
+
+Tab:AddToggle({
+ Name = "Hit all players by sword or punch",
+ Default = false,
+ Callback = function(Value)
+oojh = Value
+local LP = game.Players.LocalPlayer
+while oojh and game:GetService("RunService").RenderStepped:Wait() do
+    local p = game.Players:GetPlayers()
+    for i = 2, #p do local v = p[i].Character
+local tool = LP.Character and LP.Character:FindFirstChildOfClass("Tool")
+            if tool and tool:FindFirstChild("Handle") then
+                tool:Activate()
+                for i,v in next, v:GetChildren() do
+                    if v:IsA("BasePart") then
+                        firetouchinterest(tool.Handle,v,0)
+                        firetouchinterest(tool.Handle,v,1)
+                    end
+                end
+            end
+        end
+     end
+ end    
+})
+
+local Section = Tab:AddSection({
+  Name = "Staff modifiers"
+})
+
+Tab:AddButton({
+ Name = "Modify staff small explosion",
+ Callback = function()
+      local staff = (game.Players.LocalPlayer.Backpack:FindFirstChild("Staff") or game.Players.LocalPlayer.Character:FindFirstChild("Staff"))
+      if staff then
+        staff.Activated:Connect(function()
+          game:GetService("ReplicatedStorage"):WaitForChild("Staff Call"):WaitForChild("Small Explosion"):WaitForChild("shoot"):FireServer(game.Players.LocalPlayer:GetMouse().Hit.LookVector, game.Players.LocalPlayer:GetMouse().Hit.Position)
+        end)
+      end
+   end    
+})
+
+Tab:AddButton({
+ Name = "Modify staff light halo",
+ Callback = function()
+      local staff = (game.Players.LocalPlayer.Backpack:FindFirstChild("Staff") or game.Players.LocalPlayer.Character:FindFirstChild("Staff"))
+      if staff then
+        staff.Activated:Connect(function()
+          game:GetService("ReplicatedStorage")["Staff Call"]["Light Halo"].shoot:FireServer()
+        end)
+      end
+   end    
+})
+
+Tab:AddButton({
+ Name = "Modify staff Poseidon",
+ Callback = function()
+      local staff = (game.Players.LocalPlayer.Backpack:FindFirstChild("Staff") or game.Players.LocalPlayer.Character:FindFirstChild("Staff"))
+      if staff then
+        staff.Activated:Connect(function()
+          game:GetService("ReplicatedStorage")["Staff Call"].Poseidon.shoot:FireServer(game.Players.LocalPlayer:GetMouse().Hit.LookVector, game.Players.LocalPlayer:GetMouse().Hit.Position)
+        end)
+      end
+   end    
+})
+
+Tab:AddButton({
+ Name = "Modify staff Heal",
+ Callback = function()
+      local staff = (game.Players.LocalPlayer.Backpack:FindFirstChild("Staff") or game.Players.LocalPlayer.Character:FindFirstChild("Staff"))
+      if staff then
+        staff.Activated:Connect(function()
+          game:GetService("ReplicatedStorage")["Staff Call"].Heal.shoot:FireServer(game.Players.LocalPlayer:GetMouse().Hit.LookVector, game.Players.LocalPlayer:GetMouse().Hit.Position)
+        end)
+      end
+   end    
+})
+
+Tab:AddButton({
+ Name = "Modify staff Shield",
+ Callback = function()
+      local staff = (game.Players.LocalPlayer.Backpack:FindFirstChild("Staff") or game.Players.LocalPlayer.Character:FindFirstChild("Staff"))
+      if staff then
+        staff.Activated:Connect(function()
+          game:GetService("ReplicatedStorage")["Staff Call"].Shield.shoot:FireServer(game.Players.LocalPlayer:GetMouse().Hit.LookVector, game.Players.LocalPlayer:GetMouse().Hit.Position)
+        end)
+      end
+   end    
+})
+
+Tab:AddButton({
+ Name = "Modify staff Time Stop",
+ Callback = function()
+      local staff = (game.Players.LocalPlayer.Backpack:FindFirstChild("Staff") or game.Players.LocalPlayer.Character:FindFirstChild("Staff"))
+      if staff then
+        staff.Activated:Connect(function()
+          game:GetService("ReplicatedStorage")["Staff Call"]["Time Stop"].shoot:FireServer(game.Players.LocalPlayer:GetMouse().Hit.LookVector, game.Players.LocalPlayer:GetMouse().Hit.Position)
+        end)
+      end
+   end    
+})
+
+Tab:AddButton({
+ Name = "Modify staff Big Explosion",
+ Callback = function()
+      local staff = (game.Players.LocalPlayer.Backpack:FindFirstChild("Staff") or game.Players.LocalPlayer.Character:FindFirstChild("Staff"))
+      if staff then
+        staff.Activated:Connect(function()
+          game:GetService("ReplicatedStorage")["Staff Call"]["Big Explosion"].shoot:FireServer(game.Players.LocalPlayer:GetMouse().Hit.LookVector, game.Players.LocalPlayer:GetMouse().Hit.Position)
+        end)
+      end
+   end    
+})
+
+Tab:AddButton({
+ Name = "Super modify staff Big Explosion",
+ Callback = function()
+      local staff = (game.Players.LocalPlayer.Backpack:FindFirstChild("Staff") or game.Players.LocalPlayer.Character:FindFirstChild("Staff"))
+      if staff then
+        staff.Activated:Connect(function()
+          for _ = 1, 5 do
+            game:GetService("ReplicatedStorage")["Staff Call"]["Big Explosion"].shoot:FireServer(game.Players.LocalPlayer:GetMouse().Hit.LookVector, game.Players.LocalPlayer:GetMouse().Hit.Position)
+          end
+        end)
+      end
+   end    
+})
+
+local Section = Tab:AddSection({
+  Name = "Teleports"
+})
+
+Tab:AddDropdown({
+	Name = "To locality",
+	Default = "",
+	Options = {"Beach", "Winter", "Swamp", "Volcano", "Desert", "Coliseum", "Bamboo"},
+	Callback = function(Value)
+		if Value == "Beach" then
+		  game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1488, 46, -4050)
+		elseif Value == "Winter" then
+		  game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(696, 3, -6993)
+		elseif Value == "Swamp" then
+		  game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-506, 292, -1041)
+		elseif Value == "Volcano" then
+		  game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(3395, 2, 548)
+		elseif Value == "Desert" then
+		  game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2361, 3, -2144)
+		elseif Value == "Coliseum" then
+		  game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1053, 3, -4494)
+		elseif Value == "Bamboo" then
+		  game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(5152, 2, -2649)
+		end
+	end    
+})
+
+local Dropdown = Tab:AddDropdown({
+ Name = "To boss",
+ Default = "",
+ Options = {"The Duck?", "Huge Snail", "Mountain Golem", "Lava Wolf", "Machine Snowman", "Pharaoh", "Huge Goblin", "Sun God", "Ice Witch", "Poseidon", "Siren", "Red Dragon", "Lava General", "Panda Master", "Smurf Cat", "Golden Skeleton", "Shadow Demon", "Santa", "Clock Tower", "Zeus", "Medieval Colonel", "Priest", "Sand Worm", "Technoblade", "Napoleon", "MrBeast", "Red Samurai", "Guan Yu", "Lu Bu"},
+ Callback = function(Value)
+   game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace.mobs.BOSS:FindFirstChild(Value).WorldPivot * CFrame.new(0, 0, -50)
+ end    
+})
+
+local Tab = Window:MakeTab({
+ Name = "Other",
+ Icon = "rbxassetid://4483345998",
+ PremiumOnly = false
+})
+
+Tab:AddButton({
+ Name = "Display full power",
+ Callback = function()
+ local a = 0
+for _, val in next, game.Players.LocalPlayer.leaderstats:GetDescendants() do
+  if val:IsA("IntValue") and val.Name ~= "SP" then
+    a += val.Value
+  end
+end
+
+      OrionLib:MakeNotification({
+	Name = "Budgie Hub",
+	Content = "Your the sum of all statistics is " .. tostring(a),
+	Image = "rbxassetid://4483345998",
+	Time = 5
+})
+   end    
+})
+
+Tab:AddButton({
+ Name = "Display skill points",
+ Callback = function()
+ local as = {}
+for _, player in next, game.Players:GetPlayers() do
+  table.insert(as, `{player.Name} – {player.leaderstats.SP.Value}`)
+end
+
+OrionLib:MakeNotification({
+	Name = "Budgie Hub",
+	Content = table.concat(as, "\n"),
+	Image = "rbxassetid://4483345998",
+	Time = 5
+})
+   end    
+})
