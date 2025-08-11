@@ -62,6 +62,7 @@ local tool = LP.Character and LP.Character:FindFirstChildOfClass("Tool")
  end    
 })
 
+local iehh = false
 Tab:AddToggle({
  Name = "Instant sword kill nearest dummies",
  Default = false,
@@ -70,7 +71,7 @@ iehh = Value
  while iehh and task.wait() do
    if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"):FindFirstChild("Handle") then
      local humanoids = {}
-for _, part in next, game.Workspace:GetPartBoundsInRadius(game.Players.LocalPlayer.Character.HumanoidRootPart.Position, 80) do
+for _, part in next, game.Workspace:GetPartBoundsInRadius(game.Players.LocalPlayer.Character.HumanoidRootPart.Position, 40) do
     if part.Parent:IsA("Model") and part.Parent:FindFirstChildOfClass("Humanoid") and not part:IsDescendantOf(game.Players.LocalPlayer.Character) then
       if not table.find(humanoids, part.Parent:FindFirstChildOfClass("Humanoid")) then
         table.insert(humanoids, part.Parent:FindFirstChildOfClass("Humanoid"))
@@ -102,8 +103,32 @@ for _, part in next, game.Workspace:GetPartBoundsInRadius(game.Players.LocalPlay
    end    
 })
 
+Tab:AddToggle({
+ Name = "Teleport to boss torso at instant sword kill",
+ Default = false,
+ Callback = function(Value)
+      pei = Value
+     while pei and task.wait() do
+       if iehh == true and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
+         local humanoids = {}
+for _, part in next, workspace:GetPartBoundsInRadius(game.Players.LocalPlayer.Character.HumanoidRootPart.Position, 100) do
+    if part.Parent:IsA("Model") and part.Parent:FindFirstChildOfClass("Humanoid") and not part:IsDescendantOf(game.Players.LocalPlayer.Character) and part.Parent:IsDescendantOf(game.Workspace.mobs.BOSS) and part.Parent:FindFirstChildOfClass("Humanoid"):GetState() ~= "Dead" and part.Parent:FindFirstChildOfClass("Humanoid").Health > 0 then
+      if not table.find(humanoids, part.Parent:FindFirstChildOfClass("Humanoid")) then
+        table.insert(humanoids, part.Parent:FindFirstChildOfClass("Humanoid"))
+      end
+    end
+  end
+
+          for _, humanoid in next, humanoids do
+           game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = humanoid.RootPart.CFrame * CFrame.new(0, humanoid.RootPart.Size.Y, 0)
+         end
+       end
+     end
+   end    
+})
+
 local Section = Tab:AddSection({
-  Name = "Staff modifiers"
+  Name = "<s>Staff modifiers</s> (Patched)"
 })
 
 Tab:AddButton({
@@ -258,7 +283,7 @@ end
 
       OrionLib:MakeNotification({
 	Name = "Budgie Hub",
-	Content = "Your the sum of all statistics is " .. tostring(a),
+	Content = `Your the sum of all statistics is {a} ({string.format("%.1e", a)})`,
 	Image = "rbxassetid://4483345998",
 	Time = 5
 })
@@ -281,3 +306,22 @@ OrionLib:MakeNotification({
 })
    end    
 })
+
+local Tab = Window:MakeTab({
+  Name = "Explanation",
+  Icon = "rbxassetid://4483345998",
+  PremiumOnly = false
+})
+
+Tab:AddParagraph("Explanation of functions", [[
+  All sword functions work if you equip a sword
+  You cannot deal damage to all entities at once due to Streaming (method of optimization) and it can't be disabled because only a plugin or the same server can do this
+  But "Instant sword kill nearest dummies" work otherwise because it uses a method with part simulation and humanoid control
+  It is advisable to use "Instant sword kill nearest dummies" and "Hit all dummies by sword or punch" so that after a kill there is a higher probability 
+  of skill points being awarded
+  Function "Instant sword kill nearest dummies" work on radius <=40 studs
+]])
+
+Tab:AddParagraph("What can I do and what can\'t I do", [[
+  I'll say right away that I can't make infinite stats or remove the delay for the staff since only the server can do this, and exploits work on the client side
+]])
