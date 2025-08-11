@@ -62,6 +62,46 @@ local tool = LP.Character and LP.Character:FindFirstChildOfClass("Tool")
  end    
 })
 
+Tab:AddToggle({
+ Name = "Instant sword kill nearest dummies",
+ Default = false,
+ Callback = function(Value)
+iehh = Value
+ while iehh and task.wait() do
+   if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool"):FindFirstChild("Handle") then
+     local humanoids = {}
+for _, part in next, game.Workspace:GetPartBoundsInRadius(game.Players.LocalPlayer.Character.HumanoidRootPart.Position, 80) do
+    if part.Parent:IsA("Model") and part.Parent:FindFirstChildOfClass("Humanoid") and not part:IsDescendantOf(game.Players.LocalPlayer.Character) then
+      if not table.find(humanoids, part.Parent:FindFirstChildOfClass("Humanoid")) then
+        table.insert(humanoids, part.Parent:FindFirstChildOfClass("Humanoid"))
+      end
+    end
+  end
+
+     for _, humanoid in next, humanoids do coroutine.wrap(function()
+      firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, humanoid.RootPart, 0)
+       for _, part in next, humanoid.Parent:GetDescendants() do
+         if part:IsA("BasePart") then
+           firetouchinterest(game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Handle, part, 0)
+         end
+       end 
+       
+       coroutine.wrap(function()
+       game.Players.LocalPlayer.SimulationRadius = math.huge
+       sethiddenproperty(game.Players.LocalPlayer, "MaxSimulationRadius", math.huge)
+       settings().Network.IncomingReplicationLag = 0
+       game:GetService("TestService").IsSleepAllowed = false
+       end)()
+       
+       humanoid.Health = 0
+       humanoid:TakeDamage(math.huge)
+       humanoid:ChangeState("Dead")
+     end)() end
+   end
+ end
+   end    
+})
+
 local Section = Tab:AddSection({
   Name = "Staff modifiers"
 })
